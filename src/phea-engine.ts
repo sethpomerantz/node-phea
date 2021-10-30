@@ -100,7 +100,11 @@ export class PheaEngine {
 
         let msg = HueDtls.createMessage(lights);
         
-        this.socket.send(msg, this.opts.dtlsPort);
+        try {
+            this.socket.send(msg, this.opts.dtlsPort);
+        } catch(e) {
+            throw new Error("Deal with it ");
+        }
 
     }
 
