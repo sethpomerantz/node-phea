@@ -38,17 +38,16 @@ export namespace HueDtls {
             // this condition. If this is still true, the fix will need to look
             // at state of the socket to determine if it is open.
 
-        });
+        }).on("connected" , () => {
 
-        await new Promise(
-            (resolve) => setTimeout(resolve, 1000)
-        );
+            console.debug('Socket CONNECTED');
+             return socket;
+        })
 
-        if (socket == null) {
-            let err = new Error('PHEA: DTLS Socket could not be created.');
-        }
 
-        return socket;
+        ;
+
+
 
     }
 
