@@ -1,13 +1,14 @@
 import { Buffer } from 'buffer';
 import { dtls } from "node-dtls-client";
 import { LightState } from "./phea-light-state";
+import { Socket } from "dgram";
 
 
 export namespace HueDtls {
 
     export async function createSocket(address: string, username: string, psk: string, timeout: number, port: number) {
 
-        let socket = null;
+        let socket: Socket;
 
         let config = {
             type: "udp4",
@@ -41,11 +42,9 @@ export namespace HueDtls {
         }).on("connected" , () => {
 
             console.debug('Socket CONNECTED');
-             return socket;
         })
 
-
-        ;
+        return socket;
 
 
 

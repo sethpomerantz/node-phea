@@ -43,11 +43,15 @@ export class PheaEngine {
             this.opts.address, this.opts.username, this.opts.psk, this.opts.dtlsTimeoutMs, this.opts.dtlsPort
         );
 
-        this.running = true;
 
-        this.colorRenderLoop = setInterval(() => { this.stepColor() }, (1000 / this.opts.colorUpdatesPerSecond));
-        this.dtlsUpdateLoop = setInterval(() => { this.dtlsUpdate() }, (1000 / this.opts.dtlsUpdatesPerSecond));
+        this.socket.on("connected" , () => {
+             this.running = true;
+             this.colorRenderLoop = setInterval(() => { this.stepColor() }, (1000 / this.opts.colorUpdatesPerSecond));
+            this.dtlsUpdateLoop = setInterval(() => { this.dtlsUpdate() }, (1000 / this.opts.dtlsUpdatesPerSecond));
 
+            console.debug('Socket CONNECTED!');
+        })
+       
     }
 
     public stop(): void {

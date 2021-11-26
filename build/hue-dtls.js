@@ -9,13 +9,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.HueDtls = void 0;
 const buffer_1 = require("buffer");
 const node_dtls_client_1 = require("node-dtls-client");
 var HueDtls;
 (function (HueDtls) {
     function createSocket(address, username, psk, timeout, port) {
         return __awaiter(this, void 0, void 0, function* () {
-            let socket = null;
+            let socket;
             let config = {
                 type: "udp4",
                 port: port,
@@ -32,11 +33,9 @@ var HueDtls;
                 throw err;
             })
                 .on("close", () => {
+            }).on("connected", () => {
+                console.debug('Socket CONNECTED');
             });
-            yield new Promise((resolve) => setTimeout(resolve, 1000));
-            if (socket == null) {
-                let err = new Error('PHEA: DTLS Socket could not be created.');
-            }
             return socket;
         });
     }

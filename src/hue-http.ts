@@ -31,14 +31,9 @@ export namespace HueHttp {
 
             return bridges;
 
-        } catch (error) {
+        } catch {
 
-            switch(error.code) {
-                default:
-                    break;
-            }
-        
-            throw error;
+             throw new Error("No Bridges");
 
         }
 
@@ -116,10 +111,10 @@ export namespace HueHttp {
 
             return response;
 
-        } catch (error) {
+        } catch {
 
             //error.code = 'PHEA.HUE_API_CONTROLLER.GET_GROUP_FAILURE'; 
-            throw Error(error);
+             throw new Error("getGroup");
 
         }
 
@@ -157,9 +152,9 @@ export namespace HueHttp {
 
             return response;
 
-        } catch (error) {
+        } catch  {
 
-            throw error;
+             throw new Error("_hueApiRequest");
 
         }
     }

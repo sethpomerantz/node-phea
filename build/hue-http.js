@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.HueHttp = void 0;
 const util = require('util');
 const RequestPromise = require('request-promise-native');
 var HueHttp;
@@ -33,12 +34,8 @@ var HueHttp;
                 });
                 return bridges;
             }
-            catch (error) {
-                switch (error.code) {
-                    default:
-                        break;
-                }
-                throw error;
+            catch (_a) {
+                throw new Error("No Bridges");
             }
         });
     }
@@ -88,8 +85,8 @@ var HueHttp;
                 const response = yield RequestPromise(groupsQuery);
                 return response;
             }
-            catch (error) {
-                throw Error(error);
+            catch (_a) {
+                throw new Error("getGroup");
             }
         });
     }
@@ -121,8 +118,8 @@ var HueHttp;
                 });
                 return response;
             }
-            catch (error) {
-                throw error;
+            catch (_a) {
+                throw new Error("_hueApiRequest");
             }
         });
     }
