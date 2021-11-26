@@ -6,9 +6,8 @@ import { Socket } from "dgram";
 
 export namespace HueDtls {
 
-    export async function createSocket(address: string, username: string, psk: string, timeout: number, port: number) {
+    export function createSocket(address: string, username: string, psk: string, timeout: number, port: number): Socket {
 
-        let socket: Socket;
 
         let config = {
             type: "udp4",
@@ -20,7 +19,7 @@ export namespace HueDtls {
         }
 
         // @ts-ignore
-        socket = await dtls.createSocket(config)
+        return dtls.createSocket(config)
         .on("message", (msg: string) => { 
 
         })
@@ -44,7 +43,6 @@ export namespace HueDtls {
             console.debug('Socket CONNECTED');
         })
 
-        return socket;
 
 
 

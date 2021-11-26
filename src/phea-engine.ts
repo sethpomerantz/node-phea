@@ -39,19 +39,19 @@ export class PheaEngine {
 
         await HueHttp.setEntertainmentMode(true, this.opts.address, this.opts.username, this.groupId);
         
-        this.socket = await HueDtls.createSocket(
+        this.socket =  HueDtls.createSocket(
             this.opts.address, this.opts.username, this.opts.psk, this.opts.dtlsTimeoutMs, this.opts.dtlsPort
         );
 
+        if (this.socket) {
+            this.socket.on("connected" , () => {
+                 this.running = true;
+                 this.colorRenderLoop = setInterval(() => { this.stepColor() }, (1000 / this.opts.colorUpdatesPerSecond));
+                this.dtlsUpdateLoop = setInterval(() => { this.dtlsUpdate() }, (1000 / this.opts.dtlsUpdatesPerSecond));
 
-        this.socket.on("connected" , () => {
-             this.running = true;
-             this.colorRenderLoop = setInterval(() => { this.stepColor() }, (1000 / this.opts.colorUpdatesPerSecond));
-            this.dtlsUpdateLoop = setInterval(() => { this.dtlsUpdate() }, (1000 / this.opts.dtlsUpdatesPerSecond));
-
-            console.debug('Socket CONNECTED!');
-        })
-       
+                console.debug('Socket CONNECTED!');
+            });
+        }           
     }
 
     public stop(): void {

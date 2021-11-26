@@ -32,13 +32,15 @@ class PheaEngine {
             this.groupId = groupIdStr;
             yield this._setupLights(group.lights);
             yield hue_http_1.HueHttp.setEntertainmentMode(true, this.opts.address, this.opts.username, this.groupId);
-            this.socket = yield hue_dtls_1.HueDtls.createSocket(this.opts.address, this.opts.username, this.opts.psk, this.opts.dtlsTimeoutMs, this.opts.dtlsPort);
-            this.socket.on("connected", () => {
-                this.running = true;
-                this.colorRenderLoop = setInterval(() => { this.stepColor(); }, (1000 / this.opts.colorUpdatesPerSecond));
-                this.dtlsUpdateLoop = setInterval(() => { this.dtlsUpdate(); }, (1000 / this.opts.dtlsUpdatesPerSecond));
-                console.debug('Socket CONNECTED!');
-            });
+            this.socket = hue_dtls_1.HueDtls.createSocket(this.opts.address, this.opts.username, this.opts.psk, this.opts.dtlsTimeoutMs, this.opts.dtlsPort);
+            if (this.socket) {
+                this.socket.on("connected", () => {
+                    this.running = true;
+                    this.colorRenderLoop = setInterval(() => { this.stepColor(); }, (1000 / this.opts.colorUpdatesPerSecond));
+                    this.dtlsUpdateLoop = setInterval(() => { this.dtlsUpdate(); }, (1000 / this.opts.dtlsUpdatesPerSecond));
+                    console.debug('Socket CONNECTED!');
+                });
+            }
         });
     }
     stop() {
