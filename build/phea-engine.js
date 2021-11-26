@@ -41,6 +41,9 @@ class PheaEngine {
                     console.debug('Socket CONNECTED!');
                 });
             }
+            else {
+                return;
+            }
         });
     }
     stop() {

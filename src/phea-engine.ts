@@ -51,7 +51,10 @@ export class PheaEngine {
 
                 console.debug('Socket CONNECTED!');
             });
-        }           
+        }   else {
+
+            return;
+        }        
     }
 
     public stop(): void {
